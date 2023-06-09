@@ -15,9 +15,9 @@ class PostController extends Controller
         return $posts;
     }
 
-    public static function show()
+    public static function show(Post $post)
     {
-
+        return $post;
     }
 
     public static function create()
