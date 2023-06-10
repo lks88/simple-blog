@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -28,10 +29,18 @@ class PostController extends Controller
             $edited = true;
         }
 
+        //check if creator
+        $can_edit = false;
+
+        if($user == Auth::user()){
+            $can_edit = true;
+        }
+
         return view('posts.index')->with([
             'post' => $post,
             'user' => $user,
-            'edited' => $edited
+            'edited' => $edited,
+            'can_edit' => $can_edit
         ]);
     }
 
@@ -42,6 +51,13 @@ class PostController extends Controller
 
     public static function store(Request $request)
     {
+        $user = Auth::user();
+
+        $post = new Post;
+        $post->user_id = $user->id;
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->save();
 
     }
 
