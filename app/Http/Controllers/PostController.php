@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,17 +13,31 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        return $posts;
+        return view('dashboard')->with('posts', $posts);
     }
 
     public static function show(Post $post)
     {
-        return $post;
+        //get user
+        $user = User::find($post->user_id);
+
+        //check if edited
+        $edited = false;
+
+        if($post->created_at != $post->updated_at){
+            $edited = true;
+        }
+
+        return view('posts.index')->with([
+            'post' => $post,
+            'user' => $user,
+            'edited' => $edited
+        ]);
     }
 
     public static function create()
     {
-
+        return view('posts.create');
     }
 
     public static function store(Request $request)
@@ -30,12 +45,12 @@ class PostController extends Controller
 
     }
 
-    public static function update(Request $request)
+    public static function edit(Request $request)
     {
 
     }
 
-    public static function destroy()
+    public static function delete()
     {
 
     }

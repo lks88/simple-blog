@@ -14,6 +14,7 @@ class Post extends Model
 
     protected $fillable = [
         'title',
+        'user_id',
         'body'
     ];
 
@@ -26,7 +27,6 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
-
     public function tags(): HasManyThrough
     {
         return $this->hasManyThrough(Tag::class, PostTag::class);

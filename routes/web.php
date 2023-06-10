@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,22 +17,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::controller(PostController::class)->group(function () {
+        Route::get('/dashboard', 'index')->name('dashboard');
+
+        Route::get('/post/create', 'create')->name('posts.create');
+        Route::post('/post', 'store')->name('posts.store');
+        Route::patch('/post/{post}/edit', 'update')->where('post_id', '[0-9]+')->name('posts.edit');
+        Route::delete('/post/{post_id}', 'delete')->where('post_id', '[0-9]+')->name('posts.delete');
+    });
+
+    Route::get('/post/{post}', [PostController::class, 'show'])->where('post_id', '[0-9]+')->name('posts.index');
+
+
 });
-
-Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
-Route::get('/post/{post}', [\App\Http\Controllers\PostController::class, 'show']);
-
 
 require __DIR__.'/auth.php';
