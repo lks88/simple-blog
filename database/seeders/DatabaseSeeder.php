@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
@@ -37,6 +38,11 @@ class DatabaseSeeder extends Seeder
                    ])->create();
                }
            }
+
         });
+
+        Comment::factory(20)->create();
+
     }
+
 }

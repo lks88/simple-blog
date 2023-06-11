@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -36,9 +37,12 @@ class PostController extends Controller
             $can_edit = true;
         }
 
+        $post_comments = Comment::where('post_id', $post->id)->with('user')->get();
+
         return view('posts.index')->with([
             'post' => $post,
             'user' => $user,
+            'comments' => $post_comments,
             'edited' => $edited,
             'can_edit' => $can_edit
         ]);
@@ -59,6 +63,7 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->save();
 
+        return redirect();
     }
 
     public static function edit(Request $request)
@@ -66,8 +71,10 @@ class PostController extends Controller
 
     }
 
-    public static function delete()
+    public static function delete(Post $post)
     {
+       $post->delete();
 
+       return redirect();
     }
 }

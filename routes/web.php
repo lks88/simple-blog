@@ -26,14 +26,19 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::controller(PostController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard');
-
+        Route::get('/post/{post}',  'show')->where('post_id', '[0-9]+')->name('post.index');
         Route::get('/post/create', 'create')->name('posts.create');
         Route::post('/post', 'store')->name('posts.store');
-        Route::patch('/post/{post}/edit', 'update')->where('post_id', '[0-9]+')->name('posts.edit');
-        Route::delete('/post/{post_id}', 'delete')->where('post_id', '[0-9]+')->name('posts.delete');
+        Route::get('/post/{post}/update', 'update')->where('post_id', '[0-9]+')->name('post.update');
+        Route::delete('/post/{post}', 'delete')->where('post_id', '[0-9]+')->name('post.delete');
+
     });
 
-    Route::get('/post/{post}', [PostController::class, 'show'])->where('post_id', '[0-9]+')->name('posts.index');
+    Route::controller(CommentController::class)->group(function () {
+        Route::post('/post/{post}', 'store')->name('comment.store');
+        Route::delete('/comment/{comment}', 'delete')->where('comment_id', '[0-9]+')->name('comment.delete');
+
+    });
 
 
 });
