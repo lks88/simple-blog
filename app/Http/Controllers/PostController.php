@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -39,7 +40,7 @@ class PostController extends Controller
 
         $post_comments = Comment::where('post_id', $post->id)->with('user')->get();
 
-        return view('posts.index')->with([
+        return view('post.index')->with([
             'post' => $post,
             'user' => $user,
             'comments' => $post_comments,
@@ -48,9 +49,9 @@ class PostController extends Controller
         ]);
     }
 
-    public static function create()
+    public static function create() : View
     {
-        return view('posts.create');
+        return view('post.create');
     }
 
     public static function store(Request $request)
@@ -63,18 +64,27 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->save();
 
-        return redirect();
+        return back();
     }
 
-    public static function edit(Request $request)
+    public static function edit(Post $post)
     {
+        return view('post.edit')->with('post', $post);
+    }
 
+    public static function update(Request $request, Post $post)
+    {
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->save();
+
+        return redirect('dashboard');
     }
 
     public static function delete(Post $post)
     {
        $post->delete();
 
-       return redirect();
+        return redirect('dashboard');
     }
 }

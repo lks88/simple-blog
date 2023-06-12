@@ -11,6 +11,6 @@ class WelcomeController extends Controller
     {
         $posts = Post::all();
 
-        return view('welcome')->with('posts', $posts);
+        return view('welcome')->with('post', $posts);
     }
 }

@@ -13,7 +13,7 @@
                     </div>
 
                     <div class="mt-16">
-                        <form method="POST" action="{{ route('posts.store') }}">
+                        <form method="POST" action="{{ route('post.store') }}">
                             @csrf
                             <div class="justify-center sm:items-center">
                                 <x-label for="title" value="{{ __('Title') }}" />
@@ -39,4 +39,5 @@
 
             </div>
         </div>
+    </div>
 </x-app-layout>

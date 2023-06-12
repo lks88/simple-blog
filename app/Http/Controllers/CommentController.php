@@ -3,30 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     //
-    public static function index()
-    {
-
-    }
-
-    public static function show()
-    {
-
-    }
-
-    public static function create()
-    {
-
-    }
-
     public static function store(Request $request, $post)
     {
-
         $user = Auth::user();
 
         $comment = new Comment();
@@ -35,18 +20,13 @@ class CommentController extends Controller
         $comment->body = $request->body;
         $comment->save();
 
-        return redirect();
+        return back();
     }
 
-    public static function update()
-    {
-
-    }
-
-    public static function delete(Comment $comment)
+    public static function delete(Comment $comment, Post $post)
     {
         $comment->delete();
 
-        return redirect();
+        return back();
     }
 }
