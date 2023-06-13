@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -12,9 +15,11 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
-    //
+
     public static function index()
     {
+        //show all posts
+
         $posts = Post::all();
 
         return view('dashboard')->with('posts', $posts);
@@ -39,6 +44,7 @@ class PostController extends Controller
             $can_edit = true;
         }
 
+        //get all post comments
         $post_comments = Comment::where('post_id', $post->id)->with('user')->get();
 
         return view('post.index')->with([
@@ -55,7 +61,7 @@ class PostController extends Controller
         return view('post.create');
     }
 
-    public static function store(Request $request)
+    public static function store(PostRequest $request) : RedirectResponse
     {
         $user = Auth::user();
 
@@ -73,7 +79,7 @@ class PostController extends Controller
         return view('post.edit')->with('post', $post);
     }
 
-    public static function update(Request $request, Post $post)
+    public static function update(PostUpdateRequest $request, Post $post) : RedirectResponse
     {
         $post->title = $request->title;
         $post->body = $request->body;

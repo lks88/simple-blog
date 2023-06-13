@@ -12,11 +12,15 @@
                     <div class="flex justify-center">
                     </div>
 
-                    <div class="mt-16">
+                    <div class="font-semibold">
+                        {{$post->title}}
+                    </div>
+
+                    <div class="mt-10 text-gray-500">
                         {{$post->body}}
                     </div>
 
-                    <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
+                    <div class="flex justify-center mt-10 px-0 sm:items-center sm:justify-between">
 
                         <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
                             <div class="flex items-center gap-4">
@@ -65,26 +69,24 @@
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                        <div class="max-w-7xl mx-auto p-6 lg:p-8">
+                            <div class="flex justify-center">
+                            </div>
 
-                        <div class="flex justify-center">
-                        </div>
-                        <div class="mt-16">
-                            {{$comment->body}}
-                        </div>
+                            <div class="mt-10">
+                                {{$comment->body}}
+                            </div>
 
-
-                        <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
-                            <div class="flex items-center gap-4">
+                            <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left sm:ml-0">
                                 {{$comment->created_at}}
                             </div>
-                        </div>
 
                         @if($comment->user->id != \Illuminate\Support\Facades\Auth::user()->getAuthIdentifier())
-                            <div
-                                class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
+                            <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
                                 {{$comment->user->name}}
                             </div>
                         @elseif($comment->user->id == \Illuminate\Support\Facades\Auth::user()->getAuthIdentifier())
+
 
                             <form method="POST" action="{{ route('comment.delete', $comment, $post) }}">
                                 @csrf
@@ -100,13 +102,18 @@
 
 
                     </div>
+                </div>
+            </div>
                     @endforeach
 
-                    <div class="flex justify-center">
-                    </div>
-                    <div class="mt-16">
-                    </div>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
                     <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
                         @include('post.partials.create-comment-form', $post)
                     </div>
+            </div>
+        </div>
+            </div>
+    </div>
 </x-app-layout>

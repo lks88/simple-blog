@@ -38,7 +38,6 @@
                                 <x-primary-button>{{ __('Edit') }}</x-primary-button>
                             </div>
                         </div>
-                    </div>
 
                     </form>
 
@@ -48,5 +47,5 @@
             </div>
         </div>
     </div>
-
+</div>
 </x-app-layout>

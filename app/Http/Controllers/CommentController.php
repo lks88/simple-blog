@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     //
-    public static function store(Request $request, $post)
+    public static function store(CommentRequest $request, $post) : RedirectResponse
     {
+        //store comment
+
         $user = Auth::user();
 
         $comment = new Comment();
@@ -25,6 +29,8 @@ class CommentController extends Controller
 
     public static function delete(Comment $comment, Post $post)
     {
+        //delete comment
+
         $comment->delete();
 
         return back();

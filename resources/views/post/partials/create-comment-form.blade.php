@@ -4,6 +4,16 @@
     @csrf
     @method('post')
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div>
         <x-input-label for="body" :value="__('Add Comment')" />
         <x-text-input id="body" name="body" type="text" class="mt-1 block w-full" required autofocus autocomplete="body" />

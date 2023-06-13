@@ -28,16 +28,16 @@ class DatabaseSeeder extends Seeder
 
            $posts = Post::factory(3)->create(['user_id' => $user->id]);
 
-           foreach ($posts as $post){
-               $tags = Tag::factory(2)->create();
-
-               foreach($tags as $tag){
-                   PostTag::factory(2)->state([
-                       'post_id' => $post->id,
-                       'tag_id' => $tag->id
-                   ])->create();
-               }
-           }
+//           foreach ($posts as $post){
+//               $tags = Tag::factory(2)->create();
+//
+//               foreach($tags as $tag){
+//                   PostTag::factory(2)->state([
+//                       'post_id' => $post->id,
+//                       'tag_id' => $tag->id
+//                   ])->create();
+//               }
+//           }
 
         });
 
