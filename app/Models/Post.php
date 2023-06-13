@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -14,19 +15,19 @@ class Post extends Model
 
     protected $fillable = [
         'title',
+        'user_id',
         'body'
     ];
 
     //relationships
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
-
     public function tags(): HasManyThrough
     {
         return $this->hasManyThrough(Tag::class, PostTag::class);
