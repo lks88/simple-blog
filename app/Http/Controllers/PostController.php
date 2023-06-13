@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -64,7 +65,7 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->save();
 
-        return back();
+        return Redirect::to('/post/'.$post->id);
     }
 
     public static function edit(Post $post)
@@ -78,7 +79,7 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->save();
 
-        return redirect('dashboard');
+        return Redirect::to('/post/'.$post->id);
     }
 
     public static function delete(Post $post)
